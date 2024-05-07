@@ -26,13 +26,17 @@ public class App {
     public static void main(String[] args) {
 
         int MQTT_KEEPALIVE = 60;
-        String caCertFile = "ca.crt";
-        String topic        = "t";
+        String caCertFile = "../certs/truststore.pem";
+        String topic        = "telemetry";
         String content      = "{\"temp\": 5}";
         int qos             = 1;
-        String protocol     = "tcp"; // ssl
+        String protocol     = "ssl"; // ssl
         String broker       = "shadowcar-hono-adapter-mqtt.shadowcar-hono.svc.cluster.local:8883";
-        String clientId = UUID.randomUUID().toString();
+        String clientId     = UUID.randomUUID().toString();
+
+        String username     = "mqtt-adapter@HONO";
+        String password     = "mqtt-secret";
+
         
         MemoryPersistence persistence = new MemoryPersistence();
 
