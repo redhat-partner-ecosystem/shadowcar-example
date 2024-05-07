@@ -20,4 +20,3 @@
 1. Subscribe to a topic with a QoS of 0: `./mqtt-client -sub -h tcp://iot.eclipse.org:1883 -t world -q 0`
 2. Subscribe to a topic with a QoS of 0 and print incoming topic name (good with wildcards): `./mqtt-client -sub -h tcp://iot.eclipse.org:1883 -t world/# -q 0 -V`
 
-
