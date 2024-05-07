@@ -14,7 +14,7 @@
 
 	<url>http://maven.apache.org</url>
 	<properties>
-		<maven.compiler.release>20</maven.compiler.release>
+		<maven.compiler.release>17</maven.compiler.release>
 		<!--
 		<maven.compiler.target>1.9</maven.compiler.target>
 		<maven.compiler.source>1.9</maven.compiler.source>

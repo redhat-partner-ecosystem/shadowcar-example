@@ -24,7 +24,7 @@ public class HonoExampleConstants {
     /**
      * The default host name to assume for interacting with Hono.
      */
-    public static final String HONO_CONTAINER_HOST = "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local" // "127.0.0.1";
+    public static final String HONO_CONTAINER_HOST = "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local"; // "127.0.0.1";
     /**
      * The name or IP address of the host to connect to for consuming messages.
      */

@@ -20,6 +20,7 @@ Chart.lock
 .env
 secrets/
 hono.env
+certs/
 
 # Other
 hack/
