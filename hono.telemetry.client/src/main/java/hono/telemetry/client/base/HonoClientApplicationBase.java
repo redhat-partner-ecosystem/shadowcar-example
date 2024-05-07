@@ -1,17 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2016, 2023 Contributors to the Eclipse Foundation
- *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0
- *
- * SPDX-License-Identifier: EPL-2.0
- *******************************************************************************/
-
-package hono.telemetry.amqp.vertx.example.base;
+package hono.telemetry.client.base;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -44,7 +31,6 @@ import org.eclipse.hono.util.Lifecycle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
@@ -52,26 +38,16 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 
-
-/**
- * Example base class for consuming telemetry and event data from devices connected to Hono and sending commands to these devices.
- * <p>
- * This class implements all necessary code to get Hono's messaging consumer client and Hono's command client running.
- * <p>
- * The code consumes data until it receives any input on its console (which finishes it and closes vertx).
- */
-public class HonoExampleApplicationBase {
+public class HonoClientApplicationBase {
 
     public static final String HONO_CLIENT_USER = System.getProperty("username", "consumer@HONO");
     public static final String HONO_CLIENT_PASSWORD = System.getProperty("password", "verysecret");
-    public static final Boolean USE_PLAIN_CONNECTION =
-            Boolean.valueOf(System.getProperty("plain.connection", "false"));
-    public static final Boolean SEND_ONE_WAY_COMMANDS =
-            Boolean.valueOf(System.getProperty("sendOneWayCommands", "false"));
+    public static final Boolean USE_PLAIN_CONNECTION = Boolean.valueOf(System.getProperty("plain.connection", "false"));
+    public static final Boolean SEND_ONE_WAY_COMMANDS = Boolean.valueOf(System.getProperty("sendOneWayCommands", "false"));
     public static final Boolean USE_KAFKA = Boolean.valueOf(System.getProperty("kafka", "false"));
 
-    private static final Logger LOG = LoggerFactory.getLogger(HonoExampleApplicationBase.class);
-    private static final String KAFKA_CONSUMER_GROUP_ID = "hono-example-application";
+    private static final Logger LOG = LoggerFactory.getLogger(HonoClientApplicationBase.class);
+    private static final String KAFKA_CONSUMER_GROUP_ID = "hono-client-application";
     private static final String COMMAND_SEND_LIFECYCLE_INFO = "sendLifecycleInfo";
     private static final Random RAND = new Random();
 
@@ -98,12 +74,12 @@ public class HonoExampleApplicationBase {
      * <p>
      * Depending of the value of {@link #USE_KAFKA} either a Kafka based or an AMQP based messaging client is created.
      */
-    public HonoExampleApplicationBase() {
+    public HonoClientApplicationBase() {
         if (USE_KAFKA) {
-            port = HonoExampleConstants.HONO_KAFKA_CONSUMER_PORT;
+            port = HonoClientConstants.HONO_KAFKA_CONSUMER_PORT;
             client = createKafkaApplicationClient();
         } else {
-            port = HonoExampleConstants.HONO_AMQP_CONSUMER_PORT;
+            port = HonoClientConstants.HONO_AMQP_CONSUMER_PORT;
             client = createAmqpApplicationClient();
         }
     }
@@ -120,7 +96,7 @@ public class HonoExampleApplicationBase {
 
         final ClientConfigProperties props = new ClientConfigProperties();
         props.setLinkEstablishmentTimeout(5000L);
-        props.setHost(HonoExampleConstants.HONO_MESSAGING_HOST);
+        props.setHost(HonoClientConstants.HONO_MESSAGING_HOST);
         props.setPort(port);
         if (!USE_PLAIN_CONNECTION) {
             props.setUsername(HONO_CLIENT_USER);
@@ -144,7 +120,7 @@ public class HonoExampleApplicationBase {
     private ApplicationClient<? extends MessageContext> createKafkaApplicationClient() {
 
         final Map<String, String> properties = new HashMap<>();
-        properties.put("bootstrap.servers", HonoExampleConstants.HONO_MESSAGING_HOST + ":" + port);
+        properties.put("bootstrap.servers", HonoClientConstants.HONO_MESSAGING_HOST + ":" + port);
         // add the following lines with appropriate values to enable TLS
         // properties.put("ssl.truststore.location", "/path/to/file");
         // properties.put("ssl.truststore.password", "secret");
@@ -188,8 +164,7 @@ public class HonoExampleApplicationBase {
             LOG.info("Consumer ready for telemetry and event messages");
             System.in.read();
         } catch (final CompletionException e) {
-            LOG.error("{} consumer failed to start [{}:{}]",
-                    USE_KAFKA ? "Kafka" : "AMQP", HonoExampleConstants.HONO_MESSAGING_HOST, port, e.getCause());
+            LOG.error("{} consumer failed to start [{}:{}]", USE_KAFKA ? "Kafka" : "AMQP", HonoClientConstants.HONO_MESSAGING_HOST, port, e.getCause());
         } catch (final IOException e) {
             // nothing we can do
         }
@@ -226,7 +201,7 @@ public class HonoExampleApplicationBase {
      */
     private Future<MessageConsumer> createEventConsumer() {
         return client.createEventConsumer(
-                HonoExampleConstants.TENANT_ID,
+                HonoClientConstants.TENANT_ID,
                 msg -> {
                     // handle command readiness notification
                     msg.getTimeUntilDisconnectNotification().ifPresent(this::handleCommandReadinessNotification);
@@ -245,7 +220,7 @@ public class HonoExampleApplicationBase {
      */
     private Future<MessageConsumer> createTelemetryConsumer() {
         return client.createTelemetryConsumer(
-                HonoExampleConstants.TENANT_ID,
+                HonoClientConstants.TENANT_ID,
                 msg -> {
                     // handle command readiness notification
                     msg.getTimeUntilDisconnectNotification().ifPresent(this::handleCommandReadinessNotification);
@@ -286,7 +261,7 @@ public class HonoExampleApplicationBase {
      * notifications were persisted in the messaging network) is handled correctly.
      * <p>
      * If the contained <em>ttd</em> is set to -1, a command will be sent periodically every
-     * {@link HonoExampleConstants#COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY} seconds to the device
+     * {@link HonoClientConstants#COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY} seconds to the device
      * until a new notification was received with a <em>ttd</em> set to 0.
      *
      * @param notification The notification of a permanently connected device to handle.
@@ -326,7 +301,7 @@ public class HonoExampleApplicationBase {
                         // for devices that stay connected, start a periodic timer now that repeatedly sends a command
                         // to the device
                         vertx.setPeriodic(
-                                (long) HonoExampleConstants.COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY
+                                (long) HonoClientConstants.COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY
                                         * 1000,
                                 id -> {
                                     sendCommand(notificationToHandle);
@@ -368,7 +343,7 @@ public class HonoExampleApplicationBase {
 
         if (notification.getTtd() == -1) {
             // let the command expire directly before the next periodic timer is started
-            return Duration.ofMillis(HonoExampleConstants.COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY * 1000L);
+            return Duration.ofMillis(HonoClientConstants.COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY * 1000L);
         } else {
             // let the command expire when the notification expires
             return Duration.ofMillis(notification.getMillisecondsUntilExpiry());

@@ -82,3 +82,4 @@ curl -i -u ${MY_DEVICE}@${MY_TENANT}:${MY_PWD} ${CURL_OPTIONS} -H 'Content-Type:
 - https://www.baeldung.com/java-mqtt-client
 
 - https://github.com/quarkusio/quarkus-quickstarts
+- https://github.com/iakko/mqtt-paho-tls-example

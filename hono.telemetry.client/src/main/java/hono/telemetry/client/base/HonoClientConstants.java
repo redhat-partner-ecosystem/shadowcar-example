@@ -1,26 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2016, 2021 Contributors to the Eclipse Foundation
- *
- * See the NOTICE file(s) distributed with this work for additional
- * information regarding copyright ownership.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0
- *
- * SPDX-License-Identifier: EPL-2.0
- *******************************************************************************/
+package hono.telemetry.client.base;
 
-package hono.telemetry.amqp.vertx.example.base;
-
-/**
- * Class defines where to reach the AMQP network that needs to be accessed for consuming data.
- * This is intentionally done as pure Java constants to provide an example with minimal dependencies (no Spring is
- * used e.g.).
- *
- * Please adopt the values to your needs - the defaults serve for a typical docker swarm setup.
- */
-public class HonoExampleConstants {
+public class HonoClientConstants {
     /**
      * The default host name to assume for interacting with Hono.
      */
@@ -48,7 +28,7 @@ public class HonoExampleConstants {
     public static final int COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY =
             Integer.parseInt(System.getProperty("command.repetition.interval", "5"));
 
-    private HonoExampleConstants() {
+    private HonoClientConstants() {
         // prevent instantiation
     }
 }
