@@ -31,6 +31,7 @@ import org.eclipse.hono.util.Lifecycle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -55,7 +56,7 @@ public class HonoClientApplicationBase {
     private final ApplicationClient<? extends MessageContext> client;
     private final int port;
 
-    private static final Logger LOG = LoggerFactory.getLogger(HonoClientApplicationBase.class);
+    protected static Logger LOG = LoggerFactory.getLogger(HonoClientApplicationBase.class);
 
     /**
      * A map holding a handler to cancel a timer that was started to send commands periodically to a device.
@@ -78,9 +79,15 @@ public class HonoClientApplicationBase {
      * Depending of the value of {@link #USE_KAFKA} either a Kafka based or an AMQP based messaging client is created.
      */
     public HonoClientApplicationBase() {
+        
+        System.out.println("start");
+        LOG.error("error");
         LOG.info("info");
         LOG.debug("debug");
-
+        System.out.println(LOG.isDebugEnabled());
+        //System.out.println(LOG.isEnabledForLevel(Level.INFO));
+        System.out.println("---");
+        
         if (USE_KAFKA) {
             port = HonoClientConstants.HONO_KAFKA_CONSUMER_PORT;
             client = createKafkaApplicationClient();

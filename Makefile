@@ -18,11 +18,10 @@ env:
 	echo "export TRUSTSTORE_PATH=${TRUSTSTORE_PATH}" >> .env
 
 .PHONY: build
-build: build-hono-telemetry-client
+build: build-telemetry-amqp-consumer
 
-.PHONY: build-hono-telemetry-client
-build-hono-telemetry-client:
-	rm -rf hono.telemetry.client/target
-	cd hono.telemetry.client && mvn install -DskipTest=true 
-	mv hono.telemetry.client/target/hono.telemetry.client-${VERSION}-jar-with-dependencies.jar hono.telemetry.client/target/client-all-${VERSION}.jar
-	
+.PHONY: build-telemetry-amqp-consumer
+build-telemetry-amqp-consumer:
+	rm -rf telemetry.amqp.consumer/target
+	cd telemetry.amqp.consumer && mvn install -DskipTest=true 
+	mv telemetry.amqp.consumer/target/telemetry.amqp.consumer-${VERSION}-jar-with-dependencies.jar telemetry.amqp.consumer/target/client-all-${VERSION}.jar
