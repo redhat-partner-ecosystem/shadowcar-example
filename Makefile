@@ -15,6 +15,7 @@ env:
 	echo "export ADAPTER_MQTTS=`oc get route shadowcar-hono-adapter-mqtt-sec --output="jsonpath={.status.ingress[0].host}"`" >> .env
 	echo "export AMQP_NETWORK=`oc get route shadowcar-hono-dispatch-router --output="jsonpath={.status.ingress[0].host}"`" >> .env
 	oc get configmap ${NAMESPACE}-hono-example-trust-store --template="{{index .data \"ca.crt\"}}" > ${TRUSTSTORE_PATH}
+	echo "export TRUSTSTORE_PATH=${TRUSTSTORE_PATH}" >> .env
 
 .PHONY: build
 build: build-hono-telemetry-client
