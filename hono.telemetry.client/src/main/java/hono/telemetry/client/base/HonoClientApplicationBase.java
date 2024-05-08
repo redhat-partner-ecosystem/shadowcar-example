@@ -80,14 +80,6 @@ public class HonoClientApplicationBase {
      */
     public HonoClientApplicationBase() {
         
-        System.out.println("start");
-        LOG.error("error");
-        LOG.info("info");
-        LOG.debug("debug");
-        System.out.println(LOG.isDebugEnabled());
-        //System.out.println(LOG.isEnabledForLevel(Level.INFO));
-        System.out.println("---");
-        
         if (USE_KAFKA) {
             port = HonoClientConstants.HONO_KAFKA_CONSUMER_PORT;
             client = createKafkaApplicationClient();

@@ -42,12 +42,19 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-		<!--
+		
 		<dependency>
 			<groupId>org.eclipse.hono</groupId>
 			<artifactId>hono-client-application-amqp</artifactId>
 			<version>${hono.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.hono</groupId>
+			<artifactId>hono-client-device-amqp</artifactId>
+			<version>${hono.version}</version>
+		</dependency>
+		
+		<!--
 		<dependency>
 			<groupId>org.eclipse.hono</groupId>
 			<artifactId>hono-client-application-kafka</artifactId>
