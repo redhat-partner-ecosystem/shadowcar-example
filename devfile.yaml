@@ -12,10 +12,10 @@ components:
   - name: shadowcar-example
     container:
       image: registry.redhat.io/devspaces/udi-rhel8:3.11
-      memoryLimit: '3Gi'
-      memoryRequest: '2Gi'
-      cpuLimit: '2'
-      cpuRequest: '1'
+      memoryLimit: "3Gi"
+      memoryRequest: "2Gi"
+      cpuLimit: "2"
+      cpuRequest: "1"
       mountSources: true
       volumeMounts:
         - name: m2
@@ -28,7 +28,7 @@ commands:
     exec:
       component: tools
       workingDir: ${PROJECTS_ROOT}/shadowcar-example
-      commandLine: mvn clean install
+      commandLine: make build
       group:
         kind: build
         isDefault: true
