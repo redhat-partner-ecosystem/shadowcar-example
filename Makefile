@@ -22,5 +22,7 @@ build: build-hono-telemetry-client
 
 .PHONY: build-hono-telemetry-client
 build-hono-telemetry-client:
-	cd hono.telemetry.client && mvn install && mv target/shadowcar.hono.telemetry.client-${VERSION}-jar-with-dependencies.jar target/client-all-${VERSION}.jar
+	rm -rf hono.telemetry.client/target
+	cd hono.telemetry.client && mvn install -DskipTest=true 
+	mv hono.telemetry.client/target/hono.telemetry.client-${VERSION}-jar-with-dependencies.jar hono.telemetry.client/target/client-all-${VERSION}.jar
 	

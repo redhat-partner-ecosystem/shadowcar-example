@@ -28,6 +28,7 @@ import org.eclipse.hono.client.kafka.producer.CachingKafkaProducerFactory;
 import org.eclipse.hono.client.kafka.producer.KafkaProducerFactory;
 import org.eclipse.hono.client.kafka.producer.MessagingKafkaProducerConfigProperties;
 import org.eclipse.hono.util.Lifecycle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,6 @@ public class HonoClientApplicationBase {
     public static final Boolean SEND_ONE_WAY_COMMANDS = Boolean.valueOf(System.getProperty("sendOneWayCommands", "false"));
     public static final Boolean USE_KAFKA = Boolean.valueOf(System.getProperty("kafka", "false"));
 
-    private static final Logger LOG = LoggerFactory.getLogger(HonoClientApplicationBase.class);
     private static final String KAFKA_CONSUMER_GROUP_ID = "hono-client-application";
     private static final String COMMAND_SEND_LIFECYCLE_INFO = "sendLifecycleInfo";
     private static final Random RAND = new Random();
@@ -55,11 +55,14 @@ public class HonoClientApplicationBase {
     private final ApplicationClient<? extends MessageContext> client;
     private final int port;
 
+    private static final Logger LOG = LoggerFactory.getLogger(HonoClientApplicationBase.class);
+
     /**
      * A map holding a handler to cancel a timer that was started to send commands periodically to a device.
      * Only affects devices that use a connection oriented protocol like MQTT.
      */
     private final Map<String, Handler<Void>> periodicCommandSenderTimerCancelerMap = new HashMap<>();
+
     /**
      * A map holding the last reported notification for a device being connected. Will be emptied as soon as the
      * notification is handled.
@@ -75,6 +78,9 @@ public class HonoClientApplicationBase {
      * Depending of the value of {@link #USE_KAFKA} either a Kafka based or an AMQP based messaging client is created.
      */
     public HonoClientApplicationBase() {
+        LOG.info("info");
+        LOG.debug("debug");
+
         if (USE_KAFKA) {
             port = HonoClientConstants.HONO_KAFKA_CONSUMER_PORT;
             client = createKafkaApplicationClient();
@@ -98,12 +104,13 @@ public class HonoClientApplicationBase {
         props.setLinkEstablishmentTimeout(5000L);
         props.setHost(HonoClientConstants.HONO_MESSAGING_HOST);
         props.setPort(port);
+
         if (!USE_PLAIN_CONNECTION) {
             props.setUsername(HONO_CLIENT_USER);
             props.setPassword(HONO_CLIENT_PASSWORD);
             props.setTlsEnabled(true);
             props.setServerRole("AMQP Messaging Network");
-            props.setTrustStorePath("target/config/hono-demo-certs-jar/trusted-certs.pem");
+            props.setTrustStorePath(HonoClientConstants.TRUSTSTORE_PATH);
             props.setHostnameVerificationRequired(false);
         }
 
@@ -142,7 +149,6 @@ public class HonoClientApplicationBase {
      * Start the application client and set the message handling method to treat data that is received.
      */
     protected void consumeData() {
-
         final CompletableFuture<ApplicationClient<? extends MessageContext>> startup = new CompletableFuture<>();
 
         if (client instanceof AmqpApplicationClient) {
@@ -162,6 +168,7 @@ public class HonoClientApplicationBase {
         try {
             startup.join();
             LOG.info("Consumer ready for telemetry and event messages");
+            System.out.println("Consumer ready for telemetry and event messages");
             System.in.read();
         } catch (final CompletionException e) {
             LOG.error("{} consumer failed to start [{}:{}]", USE_KAFKA ? "Kafka" : "AMQP", HonoClientConstants.HONO_MESSAGING_HOST, port, e.getCause());
@@ -190,6 +197,7 @@ public class HonoClientApplicationBase {
         // wait for clients to be closed
         shutDown.join();
         LOG.info("Consumer has been shut down");
+        System.out.println("Consumer has been shut down");
     }
 
     /**

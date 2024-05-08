@@ -4,7 +4,7 @@ public class HonoClientConstants {
     /**
      * The default host name to assume for interacting with Hono.
      */
-    public static final String HONO_CONTAINER_HOST = "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local"; // "127.0.0.1";
+    public static final String HONO_CONTAINER_HOST = "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local";
     /**
      * The name or IP address of the host to connect to for consuming messages.
      */
@@ -21,6 +21,7 @@ public class HonoClientConstants {
 
     public static final String TENANT_ID = "DEFAULT_TENANT";
 
+    public static final String TRUSTSTORE_PATH = System.getProperty("truststore.path", "certs/truststore.pem");
     /**
      * For devices signaling that they remain connected for an indeterminate amount of time, a command is
      * periodically sent to the device after the following number of seconds elapsed.
