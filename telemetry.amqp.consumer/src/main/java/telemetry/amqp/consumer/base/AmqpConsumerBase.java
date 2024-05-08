@@ -35,23 +35,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AmqpConsumerBase {
-    public static final String HONO_MESSAGING_HOST = System.getProperty("consumer.host", "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local");
-    public static final int HONO_AMQP_CONSUMER_PORT = Integer.parseInt(System.getProperty("consumer.port", "15671"));
-    public static final String TENANT_ID = "DEFAULT_TENANT";
+    // AMQP connectivity
+    public static final String HONO_MESSAGING_HOST = System.getProperty("hono.router.host", "shadowcar-hono-dispatch-router-ext.shadowcar-hono.svc.cluster.local");
+    public static final int HONO_AMQP_CONSUMER_PORT = Integer.parseInt(System.getProperty("hono.router.port", "15671"));
+
+    // this consumer's credentials
     public static final String TRUSTSTORE_PATH = System.getProperty("truststore.path", "certs/truststore.pem");
+    public static final String HONO_CLIENT_USER = System.getProperty("hono.consumer.username", "consumer@HONO");
+    public static final String HONO_CLIENT_PASSWORD = System.getProperty("hono.consumer.password", "verysecret");
+    public static final Boolean USE_PLAIN_CONNECTION = Boolean.valueOf(System.getProperty("hono.consumer.plain.connection", "false"));
     
-    public static final String HONO_CLIENT_USER = System.getProperty("username", "consumer@HONO");
-    public static final String HONO_CLIENT_PASSWORD = System.getProperty("password", "verysecret");
-    public static final Boolean USE_PLAIN_CONNECTION = Boolean.valueOf(System.getProperty("plain.connection", "false"));
+    // monitor this tenant
+    public static final String TENANT_ID = System.getProperty("consumer.tenant", "DEFAULT_TENANT");
     
-    public static final Boolean SEND_ONE_WAY_COMMANDS = Boolean.valueOf(System.getProperty("sendOneWayCommands", "false"));
+    // consumer behaviour
+    public static final Boolean SEND_ONE_WAY_COMMANDS = Boolean.valueOf(System.getProperty("command.sendOneWayCommands", "false"));
     public static final int COMMAND_INTERVAL_FOR_DEVICES_CONNECTED_WITH_UNLIMITED_EXPIRY = Integer.parseInt(System.getProperty("command.repetition.interval", "5"));
     private static final String COMMAND_SEND_LIFECYCLE_INFO = "sendLifecycleInfo";
     
+    // internal stuff
     private static final Random RAND = new Random();
-
     protected static final Logger logger = LoggerFactory.getLogger(AmqpConsumerBase.class);
-
     private final ApplicationClient<? extends MessageContext> client;
     private final Vertx vertx = Vertx.vertx();
 
@@ -120,7 +124,7 @@ public class AmqpConsumerBase {
 
         try {
             startup.join();
-            logger.info("Consumer ready for telemetry and event messages");
+            logger.info("Consumer ready for telemetry and event messages. Tenant={}", TENANT_ID);
             System.in.read();
         } catch (final CompletionException e) {
             logger.error("{} consumer failed to start [{}:{}]", "AMQP", HONO_MESSAGING_HOST, HONO_AMQP_CONSUMER_PORT, e.getCause());
