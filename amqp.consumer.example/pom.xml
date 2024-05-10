@@ -6,10 +6,10 @@
 	<packaging>jar</packaging>
 
 	<groupId>shadowcar</groupId>
-	<artifactId>telemetry.amqp.consumer</artifactId>
+	<artifactId>amqp.consumer.example</artifactId>
 	<version>0.1.0</version>
 
-	<name>telemetry.amqp.consumer</name>
+	<name>amqp.consumer.example</name>
 
 	<properties>
 		<hono.version>2.5.1</hono.version>
@@ -136,7 +136,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										telemetry.amqp.consumer.App
+										amqp.consumer.example.App
 									</mainClass>
 								</manifest>
 							</archive>

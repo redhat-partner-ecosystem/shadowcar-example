@@ -3,8 +3,8 @@ VERSION = 0.1.0
 NAMESPACE = shadowcar
 TRUSTSTORE_PATH = certs/truststore.pem
 
-.PHONY: env
-env:
+.PHONY: export-env
+export-env:
 	rm -f .env
 	rm -f ${TRUSTSTORE_PATH}
 	oc project ${NAMESPACE}-hono
@@ -18,10 +18,10 @@ env:
 	echo "export TRUSTSTORE_PATH=${TRUSTSTORE_PATH}" >> .env
 
 .PHONY: build
-build: build-telemetry-amqp-consumer
+build: build-amqp-consumer-example
 
-.PHONY: build-telemetry-amqp-consumer
-build-telemetry-amqp-consumer:
-	rm -rf telemetry.amqp.consumer/target
-	cd telemetry.amqp.consumer && mvn install -DskipTest=true 
-	mv telemetry.amqp.consumer/target/telemetry.amqp.consumer-${VERSION}-jar-with-dependencies.jar telemetry.amqp.consumer/target/client-all-${VERSION}.jar
+.PHONY: build-amqp-consumer-example
+build-amqp-consumer-example:
+	rm -rf amqp.consumer.example/target
+	cd amqp.consumer.example && mvn install -DskipTest=true 
+	mv amqp.consumer.example/target/amqp.consumer.example-${VERSION}-jar-with-dependencies.jar amqp.consumer.example/target/client-all-${VERSION}.jar
