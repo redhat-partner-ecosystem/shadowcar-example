@@ -1,4 +1,4 @@
-package telemetry.amqp.consumer.base;
+package amqp.consumer.example.base;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,13 +16,14 @@ import org.eclipse.hono.application.client.DownstreamMessage;
 import org.eclipse.hono.application.client.MessageConsumer;
 import org.eclipse.hono.application.client.MessageContext;
 import org.eclipse.hono.application.client.TimeUntilDisconnectNotification;
-import org.eclipse.hono.application.client.amqp.ProtonBasedApplicationClient;
 import org.eclipse.hono.application.client.amqp.AmqpApplicationClient;
+import org.eclipse.hono.application.client.amqp.ProtonBasedApplicationClient;
 import org.eclipse.hono.client.ServiceInvocationException;
 import org.eclipse.hono.client.amqp.config.ClientConfigProperties;
 import org.eclipse.hono.client.amqp.connection.HonoConnection;
-
 import org.eclipse.hono.util.Lifecycle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -30,9 +31,6 @@ import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AmqpConsumerBase {
     // AMQP connectivity
