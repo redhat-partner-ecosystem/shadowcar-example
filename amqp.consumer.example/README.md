@@ -1,5 +1,10 @@
 # amqp.consumer.example
 
+#### Configuration
+
+* consumer.messaging.host
+* consumer.messaging.port
+
 #### Local development
 
 ```shell
@@ -15,5 +20,5 @@ mvn install && java -jar target/amqp.consumer.example-0.1.0-jar-with-dependencie
 ```
 
 ```shell
-clear && java -jar amqp.consumer.example/target/client-all-0.1.0.jar
+clear && java -D -jar amqp.consumer.example/target/client-all-0.1.0.jar
 ```

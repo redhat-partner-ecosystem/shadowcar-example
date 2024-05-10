@@ -136,7 +136,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										amqp.consumer.example.App
+										amqp.consumer.example.AmqpConsumerApp
 									</mainClass>
 								</manifest>
 							</archive>
