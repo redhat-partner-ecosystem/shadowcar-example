@@ -21,7 +21,7 @@ public class AmqpConsumerApp extends AmqpConsumerBase {
      * @param msg The message that was received.
      */
     protected void handleTelemetryMessage(final DownstreamMessage<? extends MessageContext> msg) {
-        logger.debug("received telemetry data [tenant: {}, device: {}, content-type: {}]: [{}].",
+        logger.info("received telemetry data [tenant: {}, device: {}, content-type: {}]: [{}].",
                 msg.getTenantId(), msg.getDeviceId(), msg.getContentType(), msg.getPayload());
     }
 
@@ -35,7 +35,7 @@ public class AmqpConsumerApp extends AmqpConsumerBase {
      * @param msg The message that was received.
      */
     protected void handleEventMessage(final DownstreamMessage<? extends MessageContext> msg) {
-        logger.debug("received event [tenant: {}, device: {}, content-type: {}]: [{}].",
+        logger.info("received event [tenant: {}, device: {}, content-type: {}]: [{}].",
                 msg.getTenantId(), msg.getDeviceId(), msg.getContentType(), msg.getPayload());
     }
 
