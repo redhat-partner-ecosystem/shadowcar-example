@@ -34,6 +34,8 @@ if tenant_id == None or device_id == None:
     print("Missing TENANT_ID or DEVICE_ID. Run setup.py first.")
     sys.exit()
 
+print(f"Using TENANT_ID {tenant_id} and DEVICE_ID {device_id}.")
+
 # Send HTTP Message
 print("Sending Telemetry message via HTTP adapter")
 response = send_message_via_http_adapter()
