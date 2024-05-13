@@ -1,14 +1,16 @@
-## MQTT Examples
+# shadowcar-examples
 
-#### Setup
+This repository contains several examples and additional services to showcase the integration of Eclipse Hono into a SDV solution.
 
-##### Export the Hono endpoints and certs
+## Getting started
+
+### Export the Hono endpoints and certs
 
 ```shell
 ./bin/export_env.sh
 ```
 
-##### Create the Python virtual environment
+### Create the Python virtual environment
 
 ```shell
 python -m venv venv
@@ -17,7 +19,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-##### Create a tenant and sample device
+### Create a tenant and sample device
 
 ```shell
 source venv/bin/activate
@@ -26,8 +28,7 @@ cd setup.python.example
 python setup.py
 ```
 
-
-#### Examples
+## Other examples
 
 ##### Push telemetry data via curl/HTTP
 

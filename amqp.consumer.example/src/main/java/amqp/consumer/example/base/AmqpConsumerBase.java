@@ -205,7 +205,7 @@ public abstract class AmqpConsumerBase {
      * Start the consumer and set the message handling method to treat data that is
      * received.
      */
-    protected void consumeMessages() {
+    protected synchronized void consumeMessages() {
         final CompletableFuture<ApplicationClient<? extends MessageContext>> startup = new CompletableFuture<>();
 
         final AmqpApplicationClient ac = (AmqpApplicationClient) client;
@@ -223,12 +223,17 @@ public abstract class AmqpConsumerBase {
         try {
             startup.join();
             logger.info("Consumer ready for telemetry and event messages. Tenant={}", TENANT_ID);
-            System.in.read();
+            
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); 
+                System.err.println("Thread Interrupted");
+            }
+
         } catch (final CompletionException e) {
             logger.error("{} consumer failed to start [{}:{}]", "AMQP", CONSUMER_MESSAGING_HOST,
                     CONSUMER_MESSAGING_PORT, e.getCause());
-        } catch (final IOException e) {
-            // nothing we can do
         }
 
         final CompletableFuture<ApplicationClient<? extends MessageContext>> shutDown = new CompletableFuture<>();
