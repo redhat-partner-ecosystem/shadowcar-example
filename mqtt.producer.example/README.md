@@ -26,11 +26,7 @@ mvn clean compile
 ```
 
 ```shell
-mvn exec:java -Dexec.mainClass=amqp.consumer.example.App
-```
-
-```shell
-clear && java -Dconsumer.tenant=$TENANT_ID -jar amqp.consumer.example/target/client-all-0.1.0.jar
+mvn exec:java -Dexec.mainClass=mqtt.producer.example.App
 ```
 
 
