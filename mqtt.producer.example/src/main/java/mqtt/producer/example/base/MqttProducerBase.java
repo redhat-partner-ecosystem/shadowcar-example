@@ -1,27 +1,12 @@
 package mqtt.producer.example.base;
 
-import java.util.*;
+import java.util.UUID;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.security.KeyStore;
-import java.security.Security;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
-
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public abstract class MqttProducerBase {
