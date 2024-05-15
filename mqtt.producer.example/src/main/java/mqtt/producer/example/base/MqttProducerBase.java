@@ -13,7 +13,7 @@ public abstract class MqttProducerBase {
 
     // connectivity to the MQTt adapter
     public static final String PRODUCER_MESSAGING_HOST = System.getProperty("producer.messaging.host", "shadowcar-hono-adapter-mqtt.shadowcar-hono.svc.cluster.local");
-    public static final String PRODUCER_MESSAGING_PROTOCOL = System.getProperty("producer.messaging.protocol", "tcp");
+    public static final String PRODUCER_MESSAGING_PROTOCOL = System.getProperty("producer.messaging.protocol", "ssl");
     public static final int PRODUCER_MESSAGING_PORT = Integer.parseInt(System.getProperty("producer.messaging.port", "8883"));
     
     // conproducer/device credentials
@@ -50,7 +50,7 @@ public abstract class MqttProducerBase {
             connOpts.setKeepAliveInterval(MQTT_KEEPALIVE);
             connOpts.setMqttVersion(3);
 
-            SSLSocketFactory socketFactory = SocketFactoryUtil.getSocketFactory3(TRUSTSTORE_PATH);
+            SSLSocketFactory socketFactory = SocketFactoryUtil.getInsecureSocketFactory(TRUSTSTORE_PATH);
 			connOpts.setSocketFactory(socketFactory);
             
             System.out.println("Connecting to broker: "+broker);
