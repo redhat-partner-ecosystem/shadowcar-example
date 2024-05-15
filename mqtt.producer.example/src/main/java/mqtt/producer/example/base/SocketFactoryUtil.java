@@ -16,6 +16,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class SocketFactoryUtil {
 
+	public static final String SSL_CONTEXT = "TLSv1.3" ;
+
 	public static SSLSocketFactory getSocketFactory(final String caCrtFile) throws Exception {
 		Security.addProvider(new BouncyCastleProvider());
 
@@ -38,7 +40,7 @@ public class SocketFactoryUtil {
 		tmf.init(caKs);
 
 		// finally, create SSL socket factory
-		SSLContext context = SSLContext.getInstance("TLSv1.2");
+		SSLContext context = SSLContext.getInstance(SSL_CONTEXT);
 		context.init(null, tmf.getTrustManagers(), null);
 
 		return context.getSocketFactory();
@@ -48,7 +50,7 @@ public class SocketFactoryUtil {
 		Security.addProvider(new BouncyCastleProvider());
 		final TrustManager[] trustAllCerts = new TrustManager[] { new InsecureTrustManager() };
 
-		SSLContext context = SSLContext.getInstance("TLSv1.2");
+		SSLContext context = SSLContext.getInstance(SSL_CONTEXT);
 		context.init(null, trustAllCerts, new java.security.SecureRandom());
 
 		return context.getSocketFactory();

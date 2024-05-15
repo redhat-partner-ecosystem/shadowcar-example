@@ -11,13 +11,13 @@ class InsecureTrustManager extends X509ExtendedTrustManager {
     @Override
     public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
     }
 
     @Override
@@ -30,28 +30,28 @@ class InsecureTrustManager extends X509ExtendedTrustManager {
     public void checkClientTrusted(X509Certificate[] arg0, String arg1, java.net.Socket arg2)
             throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
     }
 
     @Override
     public void checkClientTrusted(X509Certificate[] arg0, String arg1, SSLEngine arg2)
             throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkClientTrusted'");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] arg0, String arg1, java.net.Socket arg2)
             throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] arg0, String arg1, SSLEngine arg2)
             throws CertificateException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
+        //throw new UnsupportedOperationException("Unimplemented method 'checkServerTrusted'");
     }
 
 }

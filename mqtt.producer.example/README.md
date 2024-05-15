@@ -32,3 +32,12 @@ mvn exec:java -Dexec.mainClass=mqtt.producer.example.MqttProducerApp
 ```shell
 clear && java -Dconsumer.tenant=$TENANT_ID -jar mqtt.producer.example/target/mqtt.producer.example-0.1.0-jar-with-dependencies.jar
 ```
+
+
+
+clear && mvn compile && mvn exec:java -Dexec.mainClass=mqtt.producer.example.MqttProducerApp -Dtenant=$TENANT_ID -Ddevice.id=$DEVICE_ID
+
+
+
+-Dtruststore.path=../certs/truststore.pem -Dproducer.device=fe2e4d95-9ec6-44d3-bb3e-731b40d2df30 -Dproducer.tenant=89a33daf-fccf-4be5-8ea6-20e666679949 -Dproducer.password=my-secret-password
+        
