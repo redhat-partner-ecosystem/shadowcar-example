@@ -26,8 +26,9 @@ mvn clean compile
 ```
 
 ```shell
-mvn exec:java -Dexec.mainClass=mqtt.producer.example.App
+mvn exec:java -Dexec.mainClass=mqtt.producer.example.MqttProducerApp
 ```
 
-
-
+```shell
+clear && java -Dconsumer.tenant=$TENANT_ID -jar mqtt.producer.example/target/mqtt.producer.example-0.1.0-jar-with-dependencies.jar
+```

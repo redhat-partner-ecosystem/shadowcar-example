@@ -465,6 +465,8 @@ public abstract class AmqpConsumerBase {
      */
     private ApplicationClient<? extends MessageContext> createAmqpApplicationClient() {
 
+        // FIXME move all of this to the constructor !
+        
         final ClientConfigProperties props = new ClientConfigProperties();
         props.setLinkEstablishmentTimeout(5000L);
         props.setHost(CONSUMER_MESSAGING_HOST);
